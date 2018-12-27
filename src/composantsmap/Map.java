@@ -15,7 +15,7 @@ public class Map {
 	public  int widthCam, heightCam;
 	public ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
 	
-	private double vitesseCamera = 10;
+	private double vitesseCamera = 3;
 	public Map(ArrayList<Plateforme> listePlateforme, int widthCam, int heightCam) {
 		this.listePlateforme = listePlateforme;
 		this.widthCam = widthCam;
