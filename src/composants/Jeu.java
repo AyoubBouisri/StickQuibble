@@ -9,30 +9,57 @@ import javax.swing.JPanel;
 import composantsmap.Map;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Jeu extends JPanel implements Runnable {
-	private int WIDTH_JEU,HEIGHT_JEU;
+	private int WIDTH_JEU, HEIGHT_JEU;
+	private final int TEMPS_DU_SLEEP = 10;
+	private boolean enCoursDAnimation = false;
 	private Map mapTest;
-	
-	public Jeu(int width,int height) {
+
+	private ArrayList<String> keysPressed = new ArrayList<String>();
+
+	public Jeu(int width, int height) {
+		this.setFocusable(true);
 		addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent arg0) {
+			public void keyPressed(KeyEvent e) {
+				
+				int keyCode = e.getKeyCode();
+				String key = getKeyString(keyCode);
+
+				// if the key is already in the arrayList don't add it again
+				if (key != "") {
+					if (!keysPressed.contains(key)) {
+						keysPressed.add(key);
+						
+					}
+				}
+
 			}
+
 			@Override
 			public void keyReleased(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				String key = getKeyString(keyCode);
+
+				if (key != "") {
+					keysPressed.remove(key);
+				}
+
 			}
 		});
+
 		WIDTH_JEU = width;
 		HEIGHT_JEU = height;
-		
-		// creer map test 
+
+		// creer map test
 		creerMapTest();
 		
-		
-		
+		demarrer();
+
 	}
-	
+
 	/**
 	 * Méthode pour dessiner la composant d'animation
 	 */
@@ -41,23 +68,64 @@ public class Jeu extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
-		
+
 		// dessiner la map
 		mapTest.dessiner(g2d);
 
 	}// fin paintComponent
+
 	@Override
 	public void run() {
-		
-		
+		while (enCoursDAnimation) {
+			try {
+
+
+				
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
+		}
+
+		repaint();
+
+		try {
+			Thread.sleep(TEMPS_DU_SLEEP);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	
+	public void demarrer() {
+		if (!enCoursDAnimation) {
+			
+			Thread proc = new Thread(this);
+			proc.start();
+			enCoursDAnimation = true;
+
+		} 
+	}
+	 
 	public void creerMapTest() {
 		mapTest = new Map();
-		
+
 		// ajouter plateforme dans map
-		
+
 	}
 
+	public String getKeyString(int keyCode) {
+		String key = "";
+		if (keyCode == KeyEvent.VK_W) {
+			key = "w";
+		} else if (keyCode == KeyEvent.VK_S) {
+			key = "s";
+		} else if (keyCode == KeyEvent.VK_A) {
+			key = "a";
+		} else if (keyCode == KeyEvent.VK_D) {
+			key = "d";
+		}
+
+		return key;
+	}
 }

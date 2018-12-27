@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import composants.Jeu;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class StickQuibble extends JFrame {
 
@@ -39,26 +41,24 @@ public class StickQuibble extends JFrame {
 	 * Create the frame.
 	 */
 	public StickQuibble() {
+		
 		setTitle("Stick Quibble");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, WIDTH_APP, HEIGHT_APP);
 		contentPane = new JPanel();
+		jeu = new Jeu(WIDTH_APP,HEIGHT_APP);
+		
+		contentPane.add(jeu);
 		
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lancerJeu();
+		
 		
 		
 		
 	}
 	
-	public static void lancerJeu() {
-		jeu = new Jeu(WIDTH_APP,HEIGHT_APP);
-		contentPane.add(jeu);
-		contentPane.repaint();
-	
-	}
 
 }
