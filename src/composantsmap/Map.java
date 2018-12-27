@@ -1,6 +1,7 @@
 package composantsmap;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import geometrie.Vecteur;
@@ -10,11 +11,14 @@ public class Map {
 	private static int WIDTH_MAP = 4000,HEIGHT_MAP = 2500; 
 	
 
-	private Vecteur vecCamera = new Vecteur(0,0);
-	private int widthCamera = 1300, heightCamera = 700;
-	private ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
-	public Map(ArrayList<Plateforme> listePlateforme) {
+	public Vecteur posCamera = new Vecteur(0,0);
+	public  int widthCam, heightCam;
+	public ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
+	
+	public Map(ArrayList<Plateforme> listePlateforme, int widthCam, int heightCam) {
 		this.listePlateforme = listePlateforme;
+		this.widthCam = widthCam;
+		this.heightCam = heightCam;
 
 	}
 	public void dessiner(Graphics2D g2d) {
@@ -35,12 +39,10 @@ public class Map {
 		
 	}
 	public boolean isInMap(Plateforme plateforme) {
-		if(123 - vecCamera.getX()  > 0 &&  123 -vecCamera.getX()+ widthCamera < 0 && 321 - vecCamera.getY() < 0 && 321 - vecCamera.getY() + heightCamera >0) {
-			return true;
-		}
 		
-		
-		return false;
+		Rectangle2D.Double plateformeRect = new Rectangle2D.Double(plateforme.position.getX(), plateforme.position.getY(), plateforme.width, plateforme.height);
+		Rectangle2D.Double cameraRect = new Rectangle2D.Double(posCamera.getX(), posCamera.getY(), widthCam, heightCam);
+		return cameraRect.intersects(plateformeRect);
 	}
 	
 }

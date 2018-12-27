@@ -3,14 +3,16 @@ package composantsmap;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import geometrie.Vecteur;
+
 public class Plateforme {
-	private int x,y;
-	private int width,height;
+	public Vecteur position;
+	public int width,height;
 	
 	private Rectangle2D.Double shapePlateforme;
 	public Plateforme(int x,int y, int width,int height) {
-		this.x = x;
-		this.y = y;
+		position.setX(x);
+		position.setY(y);
 		this.width = width;
 		this.height = height;
 		
