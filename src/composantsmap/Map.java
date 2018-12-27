@@ -15,7 +15,7 @@ public class Map {
 	public  int widthCam, heightCam;
 	public ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
 	
-	private double vitesseCamera = 10;
+	private double vitesseCamera = 3;
 	public Map(ArrayList<Plateforme> listePlateforme, int widthCam, int heightCam) {
 		this.listePlateforme = listePlateforme;
 		this.widthCam = widthCam;
@@ -44,11 +44,14 @@ public class Map {
 		// trouver direction de la camera
 		if(keysPressed.contains("w")) {
 			moveY--;
-		}else if(keysPressed.contains("s")) {
+		}
+		if(keysPressed.contains("s")) {
 			moveY++;
-		}else if(keysPressed.contains("a")) {
+		}
+		if(keysPressed.contains("a")) {
 			moveX--;
-		}else if(keysPressed.contains("d")) {
+		}
+		if(keysPressed.contains("d")) {
 			moveX++;
 		}
 		// nouvelle position de la camera 

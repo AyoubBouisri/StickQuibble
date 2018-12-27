@@ -55,9 +55,6 @@ public class StickQuibble extends JFrame {
 		contentPane.setLayout(null);
 		
 		
-		
-		
-		
 	}
 	
 
