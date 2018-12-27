@@ -15,11 +15,10 @@ public class Map {
 	public static int WIDTH_MAP = 4000,HEIGHT_MAP = 2500; 
 	
 
-	public Vecteur posCamera;
-	public  int widthCam, heightCam;
+	private Camera cam;
 	public ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
 	
-	private double vitesseCamera = 3;
+	
 	
 	/**
 	 * Constructor of a Map
@@ -29,9 +28,10 @@ public class Map {
 	 */
 	public Map(ArrayList<Plateforme> listePlateforme, int widthCam, int heightCam) {
 		this.listePlateforme = listePlateforme;
-		this.widthCam = widthCam;
-		this.heightCam = heightCam;
-		posCamera = new Vecteur(WIDTH_MAP/2 - widthCam/2, HEIGHT_MAP/2 - heightCam/2);
+		Vecteur posCamera = new Vecteur(WIDTH_MAP/2 - widthCam/2, HEIGHT_MAP/2 - heightCam/2);
+		cam = new Camera(posCamera,widthCam,heightCam);
+		
+		
 
 	}
 	
@@ -44,7 +44,7 @@ public class Map {
 		for(int i = 0 ;i < listePlateforme.size(); i++) {
 		
 			if(isInMap(listePlateforme.get(i))) {
-				listePlateforme.get(i).dessinerDansEcran(g2d, posCamera);
+				listePlateforme.get(i).dessinerDansEcran(g2d, cam);
 			}
 		}
 		
@@ -75,16 +75,16 @@ public class Map {
 		}
 		// nouvelle position de la camera 
 		
-		double nouveauX = posCamera.getX() + moveX * vitesseCamera;
-		double nouveauY = posCamera.getY() + moveY * vitesseCamera;
+		double nouveauX = cam.position.getX() + moveX * cam.vitesse;
+		double nouveauY = cam.position.getY() + moveY * cam.vitesse;
 		
 		// check si la camera depasse pas la map
 	
 		if(nouveauX < 0 ) {
 			nouveauX = 0;
 		}else {
-			if(nouveauX + widthCam > WIDTH_MAP) {
-				nouveauX = WIDTH_MAP - widthCam;
+			if(nouveauX + cam.width > WIDTH_MAP) {
+				nouveauX = WIDTH_MAP - cam.width;
 			}
 		}
 		
@@ -92,13 +92,13 @@ public class Map {
 		if(nouveauY < 0 ) {
 			nouveauX = 0;
 		}else {
-			if(nouveauY + heightCam > HEIGHT_MAP) {
-				nouveauY = HEIGHT_MAP - heightCam;
+			if(nouveauY + cam.height > HEIGHT_MAP) {
+				nouveauY = HEIGHT_MAP - cam.height;
 			}
 		}
 		
-		posCamera = new Vecteur (nouveauX,nouveauY);
-		
+		Vecteur posCamera = new Vecteur (nouveauX,nouveauY);
+		cam.position = posCamera;
 	}
 	/**
 	 * Method that verify if a platform is the camera zone 
@@ -108,7 +108,7 @@ public class Map {
 	public boolean isInMap(Plateforme plateforme) {
 		
 		Rectangle2D.Double plateformeRect = new Rectangle2D.Double(plateforme.position.getX(), plateforme.position.getY(), plateforme.width, plateforme.height);
-		Rectangle2D.Double cameraRect = new Rectangle2D.Double(posCamera.getX(), posCamera.getY(), widthCam, heightCam);
+		Rectangle2D.Double cameraRect = new Rectangle2D.Double(cam.position.getX(), cam.position.getY(), cam.width, cam.height);
 		return cameraRect.intersects(plateformeRect);
 	}
 	

@@ -15,6 +15,8 @@ public class Plateforme {
 	public int width;
 	public int height;
 	
+	private Plan floor;
+	
 	private Rectangle2D.Double shapePlateforme;
 	/**
 	 * Constructor of a platform
@@ -29,21 +31,25 @@ public class Plateforme {
 		this.width = width;
 		this.height = height;
 		
+		 
+		floor = new Plan(position,new Vecteur(x + width,y));
 		shapePlateforme = new Rectangle2D.Double(x,y,width,height);
 	}
 	
 	/**
-	 * Method that draws the platform according to the camera	
+	 * Method that draws the platform according to the position of the camera	
 	 * @param g2d Object that draws the platform
 	 * @param camera vector position of the camera according to the map
 	 */
-	public void dessinerDansEcran(Graphics2D g2d, Vecteur camera) {
+	public void dessinerDansEcran(Graphics2D g2d, Camera camera) {
 	
-		double xEcran = position.getX() - camera.getX();
-		double yEcran = position.getY() - camera.getY();
+		double xEcran = position.getX() - camera.position.getX();
+		double yEcran = position.getY() - camera.position.getY();
 		shapePlateforme.setRect(xEcran, yEcran, width, height);
 		g2d.setColor(new Color(34,177,76));
 		g2d.fill(shapePlateforme);
+		
+		floor.dessinerDansEcran(g2d, camera);
 		
 		
 	}
