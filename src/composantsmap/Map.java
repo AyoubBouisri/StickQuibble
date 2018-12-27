@@ -5,7 +5,11 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import geometrie.Vecteur;
-
+/**
+ * 
+ * Class that contains the informations of a map 
+ *
+ */
 
 public class Map {
 	public static int WIDTH_MAP = 4000,HEIGHT_MAP = 2500; 
@@ -16,6 +20,13 @@ public class Map {
 	public ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
 	
 	private double vitesseCamera = 3;
+	
+	/**
+	 * Constructor of a Map
+	 * @param listePlateforme Arraylist of platforms in the map
+	 * @param widthCam Width of the camera zone 
+	 * @param heightCam Heigth of the camera zone
+	 */
 	public Map(ArrayList<Plateforme> listePlateforme, int widthCam, int heightCam) {
 		this.listePlateforme = listePlateforme;
 		this.widthCam = widthCam;
@@ -25,8 +36,8 @@ public class Map {
 	}
 	
 	/**
-	 * Methode qui permet de dessiner
-	 * @param g2d objet qui permet de dessiner
+	 * Method to draw the map
+	 * @param g2d object that draw the map
 	 */
 	public void dessiner(Graphics2D g2d) {
 		
@@ -42,7 +53,10 @@ public class Map {
 	public void scaleCamera() {
 		
 	}
-	
+	/**
+	 * Method to move the camera zone in the map with "WASD" keys.
+	 * @param keysPressed The array of that contains the key pressed 
+	 */
 	public void moveCamera(ArrayList<String> keysPressed) {
 		int moveX = 0;
 		int moveY = 0;
@@ -87,9 +101,9 @@ public class Map {
 		
 	}
 	/**
-	 * Methode qui permet de verifier si une plateforme est a l'interieur de 
-	 * @param plateforme
-	 * @return
+	 * Method that verify if a platform is the camera zone 
+	 * @param plateforme the platform that we use to verify
+	 * @return true if the platform is in the camera zone and false if not.
 	 */
 	public boolean isInMap(Plateforme plateforme) {
 		
