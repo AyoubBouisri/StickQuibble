@@ -1,5 +1,6 @@
 package composants;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -22,7 +23,9 @@ public class Jeu extends JPanel implements Runnable {
 	private ArrayList<String> keysPressed = new ArrayList<String>();
 
 	public Jeu(int width, int height) {
+		this.setBounds(0, 0, width, height);
 		this.setFocusable(true);
+		this.setLayout(null);
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -57,19 +60,20 @@ public class Jeu extends JPanel implements Runnable {
 
 		// creer map test
 		creerMapTest();
-
-		demarrer();
+		
+		this.demarrer();
 
 	}
 
 	/**
-	 * Méthode pour dessiner la composant d'animation
+	 * Mï¿½thode pour dessiner la composant d'animation
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		
 		// dessiner la map
 		mapTest.dessiner(g2d);
 		
@@ -79,13 +83,7 @@ public class Jeu extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		while (enCoursDAnimation) {
-			try {
-
-			} catch (Exception e) {
-
-				e.printStackTrace();
-			}
-			System.out.println("hi");
+			
 			repaint();
 
 			try {
@@ -98,10 +96,9 @@ public class Jeu extends JPanel implements Runnable {
 
 	public void demarrer() {
 		if (!enCoursDAnimation) {
-			enCoursDAnimation = true;
 			Thread proc = new Thread(this);
 			proc.start();
-			
+			enCoursDAnimation = true;
 
 		}
 	}
