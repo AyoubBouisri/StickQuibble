@@ -23,6 +23,11 @@ public class Map {
 		posCamera = new Vecteur(WIDTH_MAP/2 - widthCam/2, HEIGHT_MAP/2 - heightCam/2);
 
 	}
+	
+	/**
+	 * Methode qui permet de dessiner
+	 * @param g2d objet qui permet de dessiner
+	 */
 	public void dessiner(Graphics2D g2d) {
 		
 		for(int i = 0 ;i < listePlateforme.size(); i++) {
@@ -44,11 +49,14 @@ public class Map {
 		// trouver direction de la camera
 		if(keysPressed.contains("w")) {
 			moveY--;
-		}else if(keysPressed.contains("s")) {
+		}
+		if(keysPressed.contains("s")) {
 			moveY++;
-		}else if(keysPressed.contains("a")) {
+		}
+		if(keysPressed.contains("a")) {
 			moveX--;
-		}else if(keysPressed.contains("d")) {
+		}
+		if(keysPressed.contains("d")) {
 			moveX++;
 		}
 		// nouvelle position de la camera 
@@ -78,7 +86,11 @@ public class Map {
 		posCamera = new Vecteur (nouveauX,nouveauY);
 		
 	}
-	
+	/**
+	 * Methode qui permet de verifier si une plateforme est a l'interieur de 
+	 * @param plateforme
+	 * @return
+	 */
 	public boolean isInMap(Plateforme plateforme) {
 		
 		Rectangle2D.Double plateformeRect = new Rectangle2D.Double(plateforme.position.getX(), plateforme.position.getY(), plateforme.width, plateforme.height);
