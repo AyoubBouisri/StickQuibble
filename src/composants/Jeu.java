@@ -26,7 +26,7 @@ public class Jeu extends JPanel implements Runnable {
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
+
 				int keyCode = e.getKeyCode();
 				String key = getKeyString(keyCode);
 
@@ -34,7 +34,7 @@ public class Jeu extends JPanel implements Runnable {
 				if (key != "") {
 					if (!keysPressed.contains(key)) {
 						keysPressed.add(key);
-						
+
 					}
 				}
 
@@ -57,7 +57,7 @@ public class Jeu extends JPanel implements Runnable {
 
 		// creer map test
 		creerMapTest();
-		
+
 		demarrer();
 
 	}
@@ -70,9 +70,9 @@ public class Jeu extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
 		// dessiner la map
 		mapTest.dessiner(g2d);
+		
 
 	}// fin paintComponent
 
@@ -81,40 +81,36 @@ public class Jeu extends JPanel implements Runnable {
 		while (enCoursDAnimation) {
 			try {
 
-
-				
 			} catch (Exception e) {
 
 				e.printStackTrace();
 			}
-		}
+			System.out.println("hi");
+			repaint();
 
-		repaint();
-
-		try {
-			Thread.sleep(TEMPS_DU_SLEEP);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			try {
+				Thread.sleep(TEMPS_DU_SLEEP);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
-	
+
 	public void demarrer() {
 		if (!enCoursDAnimation) {
-			
+			enCoursDAnimation = true;
 			Thread proc = new Thread(this);
 			proc.start();
-			enCoursDAnimation = true;
+			
 
-		} 
+		}
 	}
-	 
+
 	public void creerMapTest() {
 
 		ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
 		listePlateforme.add(new Plateforme(0, 0, 500, 500));
 		mapTest = new Map(listePlateforme, WIDTH_JEU, HEIGHT_JEU);
-		
 
 		// ajouter plateforme dans map
 
