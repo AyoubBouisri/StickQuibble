@@ -47,9 +47,7 @@ public class StickQuibble extends JFrame {
 		setBounds(0, 0, WIDTH_APP, HEIGHT_APP);
 		contentPane = new JPanel();
 		jeu = new Jeu(WIDTH_APP,HEIGHT_APP);
-		
 		contentPane.add(jeu);
-		
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
