@@ -15,6 +15,7 @@ public class Map {
 	public  int widthCam, heightCam;
 	public ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
 	
+	private double vitesseCamera = 10;
 	public Map(ArrayList<Plateforme> listePlateforme, int widthCam, int heightCam) {
 		this.listePlateforme = listePlateforme;
 		this.widthCam = widthCam;
@@ -24,7 +25,7 @@ public class Map {
 	public void dessiner(Graphics2D g2d) {
 		
 		for(int i = 0 ;i < listePlateforme.size(); i++) {
-			System.out.println(isInMap(listePlateforme.get(i)));
+		
 			if(isInMap(listePlateforme.get(i))) {
 				listePlateforme.get(i).dessinerDansEcran(g2d, posCamera);
 			}
@@ -36,7 +37,44 @@ public class Map {
 		
 	}
 	
-	public void moveCamera() {
+	public void moveCamera(ArrayList<String> keysPressed) {
+		int moveX = 0;
+		int moveY = 0;
+		// trouver direction de la camera
+		if(keysPressed.contains("w")) {
+			moveY--;
+		}else if(keysPressed.contains("s")) {
+			moveY++;
+		}else if(keysPressed.contains("a")) {
+			moveX--;
+		}else if(keysPressed.contains("d")) {
+			moveX++;
+		}
+		// nouvelle position de la camera 
+		
+		double nouveauX = posCamera.getX() + moveX * vitesseCamera;
+		double nouveauY = posCamera.getY() + moveY * vitesseCamera;
+		
+		// check si la camera depasse pas la map
+	
+		if(nouveauX < 0 ) {
+			nouveauX = 0;
+		}else {
+			if(nouveauX + widthCam > WIDTH_MAP) {
+				nouveauX = WIDTH_MAP - widthCam;
+			}
+		}
+		
+		
+		if(nouveauY < 0 ) {
+			nouveauX = 0;
+		}else {
+			if(nouveauY + heightCam > HEIGHT_MAP) {
+				nouveauY = HEIGHT_MAP - heightCam;
+			}
+		}
+		
+		posCamera = new Vecteur (nouveauX,nouveauY);
 		
 	}
 	

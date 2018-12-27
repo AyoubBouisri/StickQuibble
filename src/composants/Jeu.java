@@ -75,6 +75,7 @@ public class Jeu extends JPanel implements Runnable {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		// dessiner la map
+		setBackground(new Color(74,207,251));
 		mapTest.dessiner(g2d);
 		
 
@@ -83,7 +84,7 @@ public class Jeu extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		while (enCoursDAnimation) {
-			
+			moveCamera();
 			repaint();
 
 			try {
@@ -103,7 +104,9 @@ public class Jeu extends JPanel implements Runnable {
 
 		}
 	}
-
+	public void moveCamera() {
+		mapTest.moveCamera(keysPressed);
+	}
 	public void creerMapTest() {
 
 		ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
