@@ -17,11 +17,18 @@ import java.util.ArrayList;
 public class Jeu extends JPanel implements Runnable {
 	private int WIDTH_JEU, HEIGHT_JEU;
 	private final int TEMPS_DU_SLEEP = 10;
-	private boolean enCoursDAnimation = false;
+		
+	private boolean animating = false;
 	private Map mapTest;
-
+	// Array that keeps track of they keys currently pressed
 	private ArrayList<String> keysPressed = new ArrayList<String>();
-
+	
+	
+	/**
+	 * Panel that keeps track of the game, prints and updates.
+	 * @param width The width of the panel
+	 * @param height The height of the panel
+	 */
 	public Jeu(int width, int height) {
 		this.setBounds(0, 0, width, height);
 		this.setFocusable(true);
@@ -66,7 +73,7 @@ public class Jeu extends JPanel implements Runnable {
 	}
 
 	/**
-	 * M�thode pour dessiner la composant d'animation
+	 * Method that draw the game
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
@@ -80,11 +87,15 @@ public class Jeu extends JPanel implements Runnable {
 		
 
 	}// fin paintComponent
-
+	/**
+	 * Method that redraws and updates the game depending of the sleep time.
+	 */
 	@Override
 	public void run() {
-		while (enCoursDAnimation) {
-			moveCamera();
+		while (animating) {
+			// move the camera
+			mapTest.moveCamera(keysPressed);
+			
 			repaint();
 
 			try {
@@ -94,18 +105,20 @@ public class Jeu extends JPanel implements Runnable {
 			}
 		}
 	}
-
+	/**
+	 * Method that stars the thread to run the game.
+	 */
 	public void demarrer() {
-		if (!enCoursDAnimation) {
+		if (!animating) {
 			Thread proc = new Thread(this);
 			proc.start();
-			enCoursDAnimation = true;
+			animating = true;
 
 		}
 	}
-	public void moveCamera() {
-		mapTest.moveCamera(keysPressed);
-	}
+	/**
+	 * Method that creates a map to test the code.
+	 */
 	public void creerMapTest() {
 
 		ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
@@ -113,10 +126,13 @@ public class Jeu extends JPanel implements Runnable {
 		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +200, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 400, 200));
 		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +1300, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 500, 300));
 		mapTest = new Map(listePlateforme, WIDTH_JEU, HEIGHT_JEU);
-		// ajouter plateforme dans map
-
+		
 	}
-
+	/**
+	 * Method that gives back the string equivalent to the inputed keyCode.
+	 * @param keyCode Integer that represent a keyCode
+	 * @return The string equivalent to the keyCode if the key is one of the playable keys.
+	 */
 	public String getKeyString(int keyCode) {
 		String key = "";
 		if (keyCode == KeyEvent.VK_W) {
