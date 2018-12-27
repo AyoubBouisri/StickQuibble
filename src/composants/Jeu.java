@@ -7,6 +7,8 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 
 import composantsmap.Map;
+import composantsmap.Plateforme;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -108,7 +110,11 @@ public class Jeu extends JPanel implements Runnable {
 	}
 	 
 	public void creerMapTest() {
-		mapTest = new Map();
+
+		ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
+		listePlateforme.add(new Plateforme(0, 0, 500, 500));
+		mapTest = new Map(listePlateforme);
+		
 
 		// ajouter plateforme dans map
 
