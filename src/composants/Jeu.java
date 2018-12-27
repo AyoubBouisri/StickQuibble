@@ -7,17 +7,29 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 
 import composantsmap.Map;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Jeu extends JPanel implements Runnable {
 	private int WIDTH_JEU,HEIGHT_JEU;
 	private Map mapTest;
 	
 	public Jeu(int width,int height) {
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+		});
 		WIDTH_JEU = width;
 		HEIGHT_JEU = height;
 		
 		// creer map test 
 		creerMapTest();
+		
+		
 		
 	}
 	
