@@ -25,7 +25,7 @@ public class Map {
 		
 		for(int i = 0 ;i < listePlateforme.size(); i++) {
 			if(isInMap(listePlateforme.get(i))) {
-				listePlateforme.get(i).dessiner(g2d);
+				listePlateforme.get(i).dessinerDansEcran(g2d);
 			}
 		}
 		
@@ -38,6 +38,7 @@ public class Map {
 	public void moveCamera() {
 		
 	}
+	
 	public boolean isInMap(Plateforme plateforme) {
 		
 		Rectangle2D.Double plateformeRect = new Rectangle2D.Double(plateforme.position.getX(), plateforme.position.getY(), plateforme.width, plateforme.height);
