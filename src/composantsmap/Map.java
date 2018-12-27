@@ -8,10 +8,10 @@ import geometrie.Vecteur;
 
 
 public class Map {
-	private static int WIDTH_MAP = 4000,HEIGHT_MAP = 2500; 
+	public static int WIDTH_MAP = 4000,HEIGHT_MAP = 2500; 
 	
 
-	public Vecteur posCamera = new Vecteur(0,0);
+	public Vecteur posCamera;
 	public  int widthCam, heightCam;
 	public ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
 	
@@ -19,6 +19,7 @@ public class Map {
 		this.listePlateforme = listePlateforme;
 		this.widthCam = widthCam;
 		this.heightCam = heightCam;
+		posCamera = new Vecteur(WIDTH_MAP/2 - widthCam/2, HEIGHT_MAP/2 - heightCam/2);
 
 	}
 	public void dessiner(Graphics2D g2d) {

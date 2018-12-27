@@ -106,9 +106,10 @@ public class Jeu extends JPanel implements Runnable {
 	public void creerMapTest() {
 
 		ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
-		listePlateforme.add(new Plateforme(0, 0, 500, 500));
+		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +700, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 500, 300));
+		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +200, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 400, 200));
+		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +1300, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 500, 300));
 		mapTest = new Map(listePlateforme, WIDTH_JEU, HEIGHT_JEU);
-
 		// ajouter plateforme dans map
 
 	}
