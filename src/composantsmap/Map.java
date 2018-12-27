@@ -24,8 +24,9 @@ public class Map {
 	public void dessiner(Graphics2D g2d) {
 		
 		for(int i = 0 ;i < listePlateforme.size(); i++) {
+			System.out.println(isInMap(listePlateforme.get(i)));
 			if(isInMap(listePlateforme.get(i))) {
-				listePlateforme.get(i).dessinerDansEcran(g2d);
+				listePlateforme.get(i).dessinerDansEcran(g2d, posCamera);
 			}
 		}
 		

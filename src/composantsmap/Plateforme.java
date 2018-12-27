@@ -8,7 +8,8 @@ import geometrie.Vecteur;
 
 public class Plateforme {
 	public Vecteur  position = new Vecteur();
-	private int width,height;
+	public int width;
+	public int height;
 	
 	private Rectangle2D.Double shapePlateforme;
 	

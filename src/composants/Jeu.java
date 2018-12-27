@@ -1,5 +1,6 @@
 package composants;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -22,11 +23,13 @@ public class Jeu extends JPanel implements Runnable {
 	private ArrayList<String> keysPressed = new ArrayList<String>();
 
 	public Jeu(int width, int height) {
+		this.setBounds(0, 0, width, height);
 		this.setFocusable(true);
+		this.setLayout(null);
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
+
 				int keyCode = e.getKeyCode();
 				String key = getKeyString(keyCode);
 
@@ -34,7 +37,7 @@ public class Jeu extends JPanel implements Runnable {
 				if (key != "") {
 					if (!keysPressed.contains(key)) {
 						keysPressed.add(key);
-						
+
 					}
 				}
 
@@ -58,7 +61,7 @@ public class Jeu extends JPanel implements Runnable {
 		// creer map test
 		creerMapTest();
 		
-		demarrer();
+		this.demarrer();
 
 	}
 
@@ -70,51 +73,42 @@ public class Jeu extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+		
 		// dessiner la map
 		mapTest.dessiner(g2d);
+		
 
 	}// fin paintComponent
 
 	@Override
 	public void run() {
 		while (enCoursDAnimation) {
+			
+			repaint();
+
 			try {
-
-
-				
-			} catch (Exception e) {
-
+				Thread.sleep(TEMPS_DU_SLEEP);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-
-		repaint();
-
-		try {
-			Thread.sleep(TEMPS_DU_SLEEP);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
-	
-	
+
 	public void demarrer() {
 		if (!enCoursDAnimation) {
-			
+
 			Thread proc = new Thread(this);
 			proc.start();
 			enCoursDAnimation = true;
 
-		} 
+		}
 	}
-	 
+
 	public void creerMapTest() {
 
 		ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
 		listePlateforme.add(new Plateforme(0, 0, 500, 500));
 		mapTest = new Map(listePlateforme, WIDTH_JEU, HEIGHT_JEU);
-		
 
 		// ajouter plateforme dans map
 
