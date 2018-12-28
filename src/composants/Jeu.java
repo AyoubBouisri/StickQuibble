@@ -7,10 +7,10 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+import characters.Character;
 import composantsmap.Map;
 import composantsmap.Plateforme;
 import geometrie.Vecteur;
-import composantsmap.Character;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Jeu extends JPanel implements Runnable {
 	
-	private final int WIDTH_CHARACTER = 40, HEIGHT_CHARACTER = 60;
+	
 	private int WIDTH_JEU, HEIGHT_JEU;
 	private final int TEMPS_DU_SLEEP = 10;
 		
@@ -99,7 +99,7 @@ public class Jeu extends JPanel implements Runnable {
 		while (animating) {
 			// move the camera
 			mapTest.moveCamera(keysPressed);
-			
+			mapTest.updateMap();
 			repaint();
 
 			try {
@@ -130,7 +130,7 @@ public class Jeu extends JPanel implements Runnable {
 		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +700, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 500, 300));
 		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +200, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 400, 200));
 		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +1300, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 500, 300));
-		Character kaya = new Character(new Vecteur(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +700, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 - HEIGHT_CHARACTER ), WIDTH_CHARACTER, HEIGHT_CHARACTER);
+		Character kaya = new Character(new Vecteur(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +700, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2  ));
 		listeCharacters.add(kaya);
 		mapTest = new Map(listePlateforme, listeCharacters,WIDTH_JEU, HEIGHT_JEU);
 		
@@ -142,14 +142,14 @@ public class Jeu extends JPanel implements Runnable {
 	 */
 	public String getKeyString(int keyCode) {
 		String key = "";
-		if (keyCode == KeyEvent.VK_W) {
-			key = "w";
-		} else if (keyCode == KeyEvent.VK_S) {
-			key = "s";
-		} else if (keyCode == KeyEvent.VK_A) {
-			key = "a";
-		} else if (keyCode == KeyEvent.VK_D) {
-			key = "d";
+		if (keyCode == KeyEvent.VK_UP) {
+			key = "up_arrow";
+		} else if (keyCode == KeyEvent.VK_DOWN) {
+			key = "down_arrow";
+		} else if (keyCode == KeyEvent.VK_LEFT) {
+			key = "left_arrow";
+		} else if (keyCode == KeyEvent.VK_RIGHT) {
+			key = "right_arrow";
 		}
 
 		return key;
