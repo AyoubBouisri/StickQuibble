@@ -1,10 +1,13 @@
 package composantsmap;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import geometrie.Vecteur;
+
+import composantsmap.Character;
 /**
  * 
  * Class that contains the informations of a map 
@@ -17,7 +20,7 @@ public class Map {
 
 	private Camera cam;
 	public ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
-	
+	public ArrayList<Character> listeCharacters = new ArrayList<Character>();
 	
 	
 	/**
@@ -26,8 +29,9 @@ public class Map {
 	 * @param widthCam Width of the camera zone 
 	 * @param heightCam Heigth of the camera zone
 	 */
-	public Map(ArrayList<Plateforme> listePlateforme, int widthCam, int heightCam) {
+	public Map(ArrayList<Plateforme> listePlateforme, ArrayList<Character> listeCharacters,int widthCam, int heightCam) {
 		this.listePlateforme = listePlateforme;
+		this.listeCharacters = listeCharacters;
 		Vecteur posCamera = new Vecteur(WIDTH_MAP/2 - widthCam/2, HEIGHT_MAP/2 - heightCam/2);
 		cam = new Camera(posCamera,widthCam,heightCam);
 		
@@ -45,6 +49,15 @@ public class Map {
 		
 			if(isInMap(listePlateforme.get(i))) {
 				listePlateforme.get(i).dessinerDansEcran(g2d, cam);
+			}
+			
+			
+		}
+		g2d.setColor(Color.RED);
+		for(int j = 0 ; j <listeCharacters.size(); j++) {
+			if(isInMap(listeCharacters.get(j))) {
+				listeCharacters.get(j).dessinerDansEcran(g2d, cam);
+				System.out.println("dessin");
 			}
 		}
 		
@@ -110,6 +123,13 @@ public class Map {
 		Rectangle2D.Double plateformeRect = new Rectangle2D.Double(plateforme.position.getX(), plateforme.position.getY(), plateforme.width, plateforme.height);
 		Rectangle2D.Double cameraRect = new Rectangle2D.Double(cam.position.getX(), cam.position.getY(), cam.width, cam.height);
 		return cameraRect.intersects(plateformeRect);
+	}
+	
+	public boolean isInMap(Character character) {
+		
+		Rectangle2D.Double characterRect = new Rectangle2D.Double(character.position.getX(), character.position.getY(), character.width, character.height);
+		Rectangle2D.Double cameraRect = new Rectangle2D.Double(cam.position.getX(), cam.position.getY(), cam.width, cam.height);
+		return cameraRect.intersects(characterRect);
 	}
 	
 }

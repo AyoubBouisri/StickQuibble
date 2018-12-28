@@ -9,12 +9,16 @@ import javax.swing.JPanel;
 
 import composantsmap.Map;
 import composantsmap.Plateforme;
+import geometrie.Vecteur;
+import composantsmap.Character;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Jeu extends JPanel implements Runnable {
+	
+	private final int WIDTH_CHARACTER = 40, HEIGHT_CHARACTER = 60;
 	private int WIDTH_JEU, HEIGHT_JEU;
 	private final int TEMPS_DU_SLEEP = 10;
 		
@@ -122,10 +126,13 @@ public class Jeu extends JPanel implements Runnable {
 	public void creerMapTest() {
 
 		ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
+		ArrayList<Character> listeCharacters = new ArrayList<Character>();
 		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +700, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 500, 300));
 		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +200, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 400, 200));
 		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +1300, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 500, 300));
-		mapTest = new Map(listePlateforme, WIDTH_JEU, HEIGHT_JEU);
+		Character kaya = new Character(new Vecteur(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +700, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 - HEIGHT_CHARACTER ), WIDTH_CHARACTER, HEIGHT_CHARACTER);
+		listeCharacters.add(kaya);
+		mapTest = new Map(listePlateforme, listeCharacters,WIDTH_JEU, HEIGHT_JEU);
 		
 	}
 	/**
