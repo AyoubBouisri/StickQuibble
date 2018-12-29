@@ -43,8 +43,8 @@ public class Collision {
 		Vecteur ptPlan = getClosestPtInPlane(character, pl);
 
 		double distance = character.centrePos.dist(ptPlan);
-		
-		if (distance <= character.HEIGHT / 2) {
+		Vecteur normaleCollision = getNormaleCollision(character,ptPlan);
+		if (distance <= character.HEIGHT / 2 && normaleCollision.equals(new Vecteur(0,-1,0))) {
 			
 			correctionFloor(character,ptPlan,pl);
 			
@@ -67,7 +67,7 @@ public class Collision {
 		double dist = c1.centrePos.dist(pt);
 		double distDesiree = c1.HEIGHT / 2;
 
-		Vecteur correctionDir = getNormaleCollision(c1, pt);
+		Vecteur correctionDir = new Vecteur(0,-1,0);
 		correctionDir.setModule(distDesiree - dist);
 
 		c1.setPosition(c1.position.additionne(correctionDir));
