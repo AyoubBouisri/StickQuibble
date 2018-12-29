@@ -56,8 +56,8 @@ public class Character {
 			speedWithGrav = MAX_SPEED_DOWN;
 		}
 		speed.setY(speedWithGrav);
-		position = position.additionne(speed);
-
+		
+		setPosition(position.additionne(speed));
 		if(isOutOfMap()) {
 			// respawn 
 			position = spawnPos.copy();
