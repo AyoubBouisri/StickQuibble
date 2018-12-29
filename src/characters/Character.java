@@ -19,6 +19,7 @@ public class Character {
 	public int damage;
 	public final Vecteur spawnPos;
 	public Vecteur position;
+	public Vecteur centrePos;
 	public Vecteur speed;;
 	public Ellipse2D.Double hitBox;
 	public final static int WIDTH = 40, HEIGHT = 60;
@@ -28,7 +29,7 @@ public class Character {
 	public Character(Vecteur position) {
 		spawnPos = position;
 		this.position = position;
-		
+		centrePos = new Vecteur(position.getX() + WIDTH / 2, position.getY() + HEIGHT/2);
 		speed = new Vecteur();
 		damage = 0;
 		hitBox = new Ellipse2D.Double(position.getX(), position.getY(), WIDTH, HEIGHT);
@@ -51,6 +52,7 @@ public class Character {
 		double speedBeforeGrav = speed.getY();
 		speed.setY(speed.getY() + GRAV_SPEED);
 		position = position.additionne(speed);
+		centrePos = centrePos.additionne(speed);
 		speed.setY(speedBeforeGrav);
 		
 		if(isOutOfMap()) {
@@ -77,6 +79,12 @@ public class Character {
 
 	public boolean canJump() {
 		return (curJumpCount == 1 || curJumpCount == 0);
+	}
+	
+	public void setPosition(Vecteur newPos) {
+		position = newPos.copy();
+		centrePos = new Vecteur(position.getX() + WIDTH / 2, position.getY() + HEIGHT/2);
+		
 	}
 
 }
