@@ -47,6 +47,7 @@ public class Collision {
 		if (distance <= character.HEIGHT / 2) {
 			
 			correctionFloor(character,ptPlan,pl);
+			
 			return ptPlan;
 		}
 		return null;

@@ -85,7 +85,11 @@ public class Map {
 		player1.update();
 		// check collision with floors
 		for(Plateforme pl : listePlateforme) {
-			Collision.inCollisionFloor(player1, pl.floor);
+			if(Collision.inCollisionFloor(player1, pl.floor)!=null) {
+				player1.curJumpCount = 0;
+				player1.speed.setY(0);
+			};
+			
 		}
 		
 	}
