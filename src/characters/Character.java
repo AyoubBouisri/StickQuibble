@@ -24,7 +24,7 @@ public class Character {
 	public Vecteur centrePos;
 	public Vecteur speed;;
 	public Ellipse2D.Double hitBox;
-	public final static int WIDTH = 40, HEIGHT = 60;
+	public final static int WIDTH = 30, HEIGHT = 50;
 
 	public int curJumpCount = 0;
 
