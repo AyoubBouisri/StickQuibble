@@ -60,7 +60,7 @@ public class Character {
 		setPosition(position.additionne(speed));
 		if(isOutOfMap()) {
 			// respawn 
-			position = spawnPos.copy();
+			respawn();
 		}
 	}
 
@@ -100,5 +100,11 @@ public class Character {
 		centrePos = new Vecteur(position.getX() + WIDTH / 2, position.getY() + HEIGHT/2);
 		
 	}
+	public void respawn() {
+		curJumpCount = 0;
+		position = spawnPos.copy();
+		speed.setXYZ(0, 0);
+	}
+	
 
 }
