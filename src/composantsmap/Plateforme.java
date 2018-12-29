@@ -15,7 +15,7 @@ public class Plateforme {
 	public int width;
 	public int height;
 	
-	private Plan floor;
+	public Plan floor;
 	
 	private Rectangle2D.Double shapePlateforme;
 	/**

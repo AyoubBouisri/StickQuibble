@@ -43,8 +43,10 @@ public class Collision {
 		Vecteur ptPlan = getClosestPtInPlane(character, pl);
 
 		double distance = character.centrePos.dist(ptPlan);
-
+		
 		if (distance <= character.HEIGHT / 2) {
+			
+			correctionFloor(character,ptPlan,pl);
 			return ptPlan;
 		}
 		return null;
@@ -59,7 +61,8 @@ public class Collision {
 	 * @param pt
 	 *            Closest point to the character on the plane
 	 */
-	public static void correctionFloor(Character c1, Vecteur pt) {
+	public static void correctionFloor(Character c1, Vecteur pt,Plan pl) {
+		
 		double dist = c1.centrePos.dist(pt);
 		double distDesiree = c1.HEIGHT / 2;
 

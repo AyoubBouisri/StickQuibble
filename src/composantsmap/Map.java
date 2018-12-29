@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import characters.Character;
+import geometrie.Collision;
 import geometrie.Vecteur;
 
 /**
@@ -57,8 +58,6 @@ public class Map {
 			}
 
 		}
-		
-
 		if (isInMap(player1)) {
 			player1.dessinerDansEcran(g2d, cam);
 
@@ -84,6 +83,11 @@ public class Map {
 	 */
 	public void updateCharacters() {
 		player1.update();
+		// check collision with floors
+		for(Plateforme pl : listePlateforme) {
+			Collision.inCollisionFloor(player1, pl.floor);
+		}
+		
 	}
 
 	/**
