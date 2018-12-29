@@ -11,9 +11,11 @@ import geometrie.Vecteur;
 
 public class Character {
 	public final static int JUMP_HEIGHT = 50;
-	public final static int MAX_SPEED_DOWN = 30;
+	public final static int MAX_SPEED_DOWN = 10;
+	public final static int SPEED_HORIZON = 3;
+	public final static int JUMPING_POWER = -4;
 
-	public final static double GRAV_SPEED = 3;
+	public final static double GRAV = 0.1;
 	public final static int JUMP_SPEED = 30;
 
 	public int damage;
@@ -49,12 +51,13 @@ public class Character {
 
 	public void update() {
 		// update the speed after grav
-		double speedBeforeGrav = speed.getY();
-		speed.setY(speed.getY() + GRAV_SPEED);
+		double speedWithGrav = speed.getY() + GRAV;
+		if(speedWithGrav > MAX_SPEED_DOWN) {
+			speedWithGrav = MAX_SPEED_DOWN;
+		}
+		speed.setY(speedWithGrav);
 		position = position.additionne(speed);
-		centrePos = centrePos.additionne(speed);
-		speed.setY(speedBeforeGrav);
-		
+
 		if(isOutOfMap()) {
 			// respawn 
 			position = spawnPos.copy();
@@ -74,7 +77,18 @@ public class Character {
 	}
 
 	public void jump() {
-		speed.setY(30);
+		if(canJump()) {
+			speed.setY(JUMPING_POWER);
+			curJumpCount++;
+		}
+		
+	}
+	public void moveX(boolean left) {
+		if(left) {
+			speed.setX(-SPEED_HORIZON);
+		} else {
+			speed.setX(SPEED_HORIZON);
+		}
 	}
 
 	public boolean canJump() {

@@ -17,21 +17,22 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Jeu extends JPanel implements Runnable {
-	
-	
+
 	private int WIDTH_JEU, HEIGHT_JEU;
 	private final int TEMPS_DU_SLEEP = 10;
-		
+
 	private boolean animating = false;
 	private Map mapTest;
 	// Array that keeps track of they keys currently pressed
 	private ArrayList<String> keysPressed = new ArrayList<String>();
-	
-	
+
 	/**
 	 * Panel that keeps track of the game, prints and updates.
-	 * @param width The width of the panel
-	 * @param height The height of the panel
+	 * 
+	 * @param width
+	 *            The width of the panel
+	 * @param height
+	 *            The height of the panel
 	 */
 	public Jeu(int width, int height) {
 		this.setBounds(0, 0, width, height);
@@ -71,7 +72,7 @@ public class Jeu extends JPanel implements Runnable {
 
 		// creer map test
 		creerMapTest();
-		
+
 		this.demarrer();
 
 	}
@@ -84,13 +85,13 @@ public class Jeu extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		// dessiner la map
-		setBackground(new Color(74,207,251));
+		setBackground(new Color(74, 207, 251));
 		mapTest.dessiner(g2d);
-		
 
 	}// fin paintComponent
+
 	/**
 	 * Method that redraws and updates the game depending of the sleep time.
 	 */
@@ -99,6 +100,7 @@ public class Jeu extends JPanel implements Runnable {
 		while (animating) {
 			// move the camera
 			mapTest.moveCamera(keysPressed);
+			mapTest.moveCharacter(keysPressed);
 			mapTest.updateMap();
 			repaint();
 
@@ -109,6 +111,7 @@ public class Jeu extends JPanel implements Runnable {
 			}
 		}
 	}
+
 	/**
 	 * Method that stars the thread to run the game.
 	 */
@@ -120,6 +123,7 @@ public class Jeu extends JPanel implements Runnable {
 
 		}
 	}
+
 	/**
 	 * Method that creates a map to test the code.
 	 */
@@ -127,21 +131,57 @@ public class Jeu extends JPanel implements Runnable {
 
 		ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
 		ArrayList<Character> listeCharacters = new ArrayList<Character>();
-		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +700, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 500, 300));
-		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +200, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 400, 200));
-		listePlateforme.add(new Plateforme(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +1300, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2 +200 , 500, 300));
-		Character kaya = new Character(new Vecteur(Map.WIDTH_MAP/2 - WIDTH_JEU/2 +700, Map.HEIGHT_MAP/2 - HEIGHT_JEU/2  ));
+		listePlateforme.add(new Plateforme(Map.WIDTH_MAP / 2 - WIDTH_JEU / 2 + 700,
+				Map.HEIGHT_MAP / 2 - HEIGHT_JEU / 2 + 200, 500, 300));
+		listePlateforme.add(new Plateforme(Map.WIDTH_MAP / 2 - WIDTH_JEU / 2 + 200,
+				Map.HEIGHT_MAP / 2 - HEIGHT_JEU / 2 + 200, 400, 200));
+		listePlateforme.add(new Plateforme(Map.WIDTH_MAP / 2 - WIDTH_JEU / 2 + 1300,
+				Map.HEIGHT_MAP / 2 - HEIGHT_JEU / 2 + 200, 500, 300));
+		Character kaya = new Character(
+				new Vecteur(Map.WIDTH_MAP / 2 - WIDTH_JEU / 2 + 700, Map.HEIGHT_MAP / 2 - HEIGHT_JEU / 2));
 		listeCharacters.add(kaya);
-		mapTest = new Map(listePlateforme, listeCharacters,WIDTH_JEU, HEIGHT_JEU);
-		
+		mapTest = new Map(listePlateforme, listeCharacters, WIDTH_JEU, HEIGHT_JEU);
+
 	}
+
 	/**
 	 * Method that gives back the string equivalent to the inputed keyCode.
-	 * @param keyCode Integer that represent a keyCode
-	 * @return The string equivalent to the keyCode if the key is one of the playable keys.
+	 * 
+	 * @param keyCode
+	 *            Integer that represent a keyCode
+	 * @return The string equivalent to the keyCode if the key is one of the
+	 *         playable keys.
 	 */
 	public String getKeyString(int keyCode) {
 		String key = "";
+
+		switch (keyCode) {
+		case KeyEvent.VK_DOWN:
+			key = "down_arrow";
+			break;
+		case KeyEvent.VK_UP :
+			key = "up_arrow";
+			break;
+		case KeyEvent.VK_LEFT :
+			key = "left_arrow";
+			break;
+		case KeyEvent.VK_RIGHT :
+			key = "right_arrow";
+			break;
+		case KeyEvent.VK_W :
+			key = "w";
+			break;
+		case KeyEvent.VK_S :
+			key = "s";
+			break;
+		case KeyEvent.VK_A :
+			key = "a";
+			break;
+		case KeyEvent.VK_D :
+			key = "d";
+			break;	
+		}
+		/*
 		if (keyCode == KeyEvent.VK_UP) {
 			key = "up_arrow";
 		} else if (keyCode == KeyEvent.VK_DOWN) {
@@ -151,6 +191,7 @@ public class Jeu extends JPanel implements Runnable {
 		} else if (keyCode == KeyEvent.VK_RIGHT) {
 			key = "right_arrow";
 		}
+		*/
 
 		return key;
 	}

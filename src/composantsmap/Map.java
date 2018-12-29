@@ -134,6 +134,27 @@ public class Map {
 		Vecteur posCamera = new Vecteur(nouveauX, nouveauY);
 		cam.position = posCamera;
 	}
+	
+	
+	public void moveCharacter(ArrayList<String> keysPressed) {
+		if(keysPressed.contains("w")) {
+			keysPressed.remove("w");
+			player1.jump();
+			
+		}
+		if(keysPressed.contains("a")) {
+			player1.moveX(true);
+			System.out.println("left");
+		}else if(keysPressed.contains("d")) {
+			player1.moveX(false);
+		} else {
+			player1.speed.setX(0);
+		}
+		if(keysPressed.contains("s")) {
+	
+		}
+		
+	}
 
 	/**
 	 * Method that verify if a platform is the camera zone
