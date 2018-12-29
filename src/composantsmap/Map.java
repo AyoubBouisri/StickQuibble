@@ -142,17 +142,27 @@ public class Map {
 			player1.jump();
 			
 		}
-		if(keysPressed.contains("a")) {
-			player1.moveX(true);
-			System.out.println("left");
-		}else if(keysPressed.contains("d")) {
-			player1.moveX(false);
-		} else {
-			player1.speed.setX(0);
-		}
 		if(keysPressed.contains("s")) {
-	
+			
 		}
+		if(keysPressed.contains("a") &&keysPressed.contains("d")) {
+			if(keysPressed.indexOf("a") < keysPressed.indexOf("d")) {
+				player1.moveX(false);
+			} else{
+				player1.moveX(true);
+			}
+		} else {
+			if(keysPressed.contains("a")) {
+				player1.moveX(true);
+				System.out.println("left");
+			}else if(keysPressed.contains("d")) {
+				player1.moveX(false);
+			} else {
+				player1.speed.setX(0);
+			}
+		}
+		
+		
 		
 	}
 
