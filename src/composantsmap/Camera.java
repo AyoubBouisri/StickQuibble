@@ -45,13 +45,19 @@ public class Camera {
 			yAverage+= posTransfo.getY();
 			
 		}
-		//xAverage += mapWidth/2;
-		//yAverage += mapHeight/2;
+		
 		xAverage /= characters.length ;
 		yAverage /= characters.length ;
+		
+		//gradual movement of the camera in case one of the character moves too fast
 		position = position.additionne(nextPosition.soustrait(position).multiplie(COEF_CAMSPEED));
 		nextPosition = new Vecteur(xAverage - width / 2,yAverage - height/ 2);
 	}
+	/**
+	 * Method to return a position in the zone accepted for a character
+	 * @param pos position of a character
+	 * @return return the new position of the character that is within the zone accepted
+	 */
 	public Vecteur inZoneMax(Vecteur pos) {
 		Vecteur vecTransfo = new Vecteur(pos.getX(),pos.getY());
 		

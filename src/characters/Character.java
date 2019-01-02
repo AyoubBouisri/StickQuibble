@@ -48,6 +48,7 @@ public class Character {
 
 	public void dessinerHorsEcran(Graphics2D g2d, Camera camera) {
 
+		
 	}
 
 	public void update() {
