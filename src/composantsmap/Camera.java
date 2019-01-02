@@ -6,9 +6,11 @@ import characters.Character;
 public class Camera {
 	public final double COEF_MAX = 0.30;
 	public final double COEF_CTC = 0.1; // Coef of the distance between a character and the camera zone
+	public final double COEF_CAMSPEED = 0.175;
 	public double maxDeltaPosX;
 	public double maxDeltaPosY;
 	public Vecteur position;
+	public Vecteur nextPosition; // the next position the camera 
 	public int width,height, mapWidth, mapHeight;
 	
 	public int vitesse = 3;
@@ -20,6 +22,7 @@ public class Camera {
 	 */
 	public Camera(Vecteur pos,int width,int height, int mapWidth, int mapHeight) {
 		this.position = pos;
+		this.nextPosition = pos;
 		this.width = width ;
 		this.height = height;
 		this.mapHeight = mapHeight;
@@ -46,7 +49,8 @@ public class Camera {
 		//yAverage += mapHeight/2;
 		xAverage /= characters.length ;
 		yAverage /= characters.length ;
-		position = new Vecteur(xAverage - width / 2,yAverage - height/ 2);
+		position = position.additionne(nextPosition.soustrait(position).multiplie(COEF_CAMSPEED));
+		nextPosition = new Vecteur(xAverage - width / 2,yAverage - height/ 2);
 	}
 	public Vecteur inZoneMax(Vecteur pos) {
 		Vecteur vecTransfo = new Vecteur(pos.getX(),pos.getY());
@@ -59,9 +63,8 @@ public class Camera {
 		
 		if(pos.getY() > mapHeight - maxDeltaPosY) {
 			vecTransfo.setY(mapHeight - maxDeltaPosY);
-		} else if(pos.getY() < maxDeltaPosY) {
-			vecTransfo.setY(maxDeltaPosY);
-		}
+		} 
+		
 		
 		return vecTransfo;
 	}
