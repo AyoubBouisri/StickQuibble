@@ -33,7 +33,7 @@ public class Map {
 	public Map(int widthCam, int heightCam) {
 
 		Vecteur posCamera = new Vecteur(WIDTH_MAP / 2 - widthCam / 2, HEIGHT_MAP / 2 - heightCam / 2);
-		cam = new Camera(posCamera, widthCam, heightCam);
+		cam = new Camera(posCamera, widthCam, heightCam, WIDTH_MAP, HEIGHT_MAP);
 		// spawn the players
 		double distPlayers = 500;
 		characters[0] = new Character(new Vecteur(WIDTH_MAP / 2 - distPlayers /2 , posCamera.getY() + 30),
