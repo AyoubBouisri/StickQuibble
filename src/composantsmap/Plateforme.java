@@ -12,8 +12,8 @@ import geometrie.Vecteur;
  */
 public class Plateforme {
 	public Vecteur  position = new Vecteur();
-	public int width;
-	public int height;
+	public double width;
+	public double height;
 	
 	public Plan floor;
 	
@@ -22,18 +22,18 @@ public class Plateforme {
 	 * Constructor of a platform
 	 * @param x coordinate x of the top left position of the platform
 	 * @param y coordinate y of the top left position of the platform
-	 * @param width the width of the platform
-	 * @param height the height of the platform
+	 * @param width2 the width of the platform
+	 * @param height2 the height of the platform
 	 */
-	public Plateforme(int x,int y, int width,int height) {
+	public Plateforme(double x,double y, double width2,double height2) {
 		position.setX(x);
 		position.setY(y);
-		this.width = width;
-		this.height = height;
+		this.width = width2;
+		this.height = height2;
 		
 		 
-		floor = new Plan(position,new Vecteur(x + width,y));
-		shapePlateforme = new Rectangle2D.Double(x,y,width,height);
+		floor = new Plan(position,new Vecteur(x + width2,y));
+		shapePlateforme = new Rectangle2D.Double(x,y,width2,height2);
 	}
 	
 	/**

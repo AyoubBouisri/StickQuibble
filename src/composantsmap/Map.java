@@ -17,29 +17,29 @@ import geometrie.Vecteur;
 
 public class Map {
 	public static int WIDTH_MAP = 4000, HEIGHT_MAP = 2500;
-
+	private static int NB_CHARACTERS = 2;
 	private Camera cam;
 	public ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
-	// public ArrayList<Character> listeCharacters = new ArrayList<Character>();
-	public Character player1;
+	public Character[] characters = new Character[NB_CHARACTERS];
 
 	/**
 	 * Constructor of a Map
 	 * 
-	 * @param listePlateforme
-	 *            Arraylist of platforms in the map
-	 * @param widthCam
-	 *            Width of the camera zone
+	 * * @param widthCam Width of the camera zone
+	 * 
 	 * @param heightCam
 	 *            Heigth of the camera zone
 	 */
-	public Map(ArrayList<Plateforme> listePlateforme, ArrayList<Character> listeCharacters, int widthCam,
-			int heightCam) {
-		this.listePlateforme = listePlateforme;
-		// this.listeCharacters = listeCharacters;
+	public Map(int widthCam, int heightCam) {
+
 		Vecteur posCamera = new Vecteur(WIDTH_MAP / 2 - widthCam / 2, HEIGHT_MAP / 2 - heightCam / 2);
 		cam = new Camera(posCamera, widthCam, heightCam);
-		player1 = new Character(new Vecteur(posCamera.getX() + cam.width / 2, posCamera.getY() + 30));
+		// spawn the players
+		double distPlayers = 500;
+		characters[0] = new Character(new Vecteur(WIDTH_MAP / 2 - distPlayers /2 , posCamera.getY() + 30),
+				new Color(252, 187, 35));
+		characters[1] = new Character(new Vecteur(WIDTH_MAP / 2 + distPlayers / 2, posCamera.getY() + 30),
+				new Color(255, 174, 201));
 
 	}
 
@@ -58,23 +58,21 @@ public class Map {
 			}
 
 		}
-		if (isInMap(player1)) {
-			player1.dessinerDansEcran(g2d, cam);
+		for (Character c : characters) {
+			if (isInMap(c)) {
+				c.dessinerDansEcran(g2d, cam);
 
-		} else {
+			} else {
 
-			player1.dessinerHorsEcran(g2d, cam);
+				c.dessinerHorsEcran(g2d, cam);
+			}
 		}
 
 	}
 
 	public void updateMap() {
-		// update the characters
 		updateCharacters();
-	}
-
-	public void scaleCamera() {
-
+		cam.update(characters);
 	}
 
 	/**
@@ -82,96 +80,78 @@ public class Map {
 	 * and moves the characters according to the inputs.
 	 */
 	public void updateCharacters() {
-		player1.update();
+		for (Character c : characters) {
+			c.update();
+		}
+
 		// check collision with floors
-		for(Plateforme pl : listePlateforme) {
-			if(Collision.inCollisionFloor(player1, pl.floor)!=null) {
-				player1.curJumpCount = 0;
-				player1.speed.setY(0);
-			};
-			
+		for (Plateforme pl : listePlateforme) {
+			for (Character c : characters) {
+				if (Collision.inCollisionFloor(c, pl.floor) != null) {
+					c.curJumpCount = 0;
+					c.speed.setY(0);
+				}
+			}
+
 		}
-		
+
 	}
 
-	/**
-	 * Method to move the camera zone in the map with "WASD" keys.
-	 * 
-	 * @param keysPressed
-	 *            The array of that contains the key pressed
-	 */
-	public void moveCamera(ArrayList<String> keysPressed) {
-		int moveX = 0;
-		int moveY = 0;
-		// trouver direction de la camera
-		if (keysPressed.contains("up_arrow")) {
-			moveY--;
-		}
-		if (keysPressed.contains("down_arrow")) {
-			moveY++;
-		}
-		if (keysPressed.contains("left_arrow")) {
-			moveX--;
-		}
-		if (keysPressed.contains("right_arrow")) {
-			moveX++;
-		}
-		// nouvelle position de la camera
-
-		double nouveauX = cam.position.getX() + moveX * cam.vitesse;
-		double nouveauY = cam.position.getY() + moveY * cam.vitesse;
-
-		// check si la camera depasse pas la map
-
-		if (nouveauX < 0) {
-			nouveauX = 0;
-		} else {
-			if (nouveauX + cam.width > WIDTH_MAP) {
-				nouveauX = WIDTH_MAP - cam.width;
-			}
-		}
-
-		if (nouveauY < 0) {
-			nouveauX = 0;
-		} else {
-			if (nouveauY + cam.height > HEIGHT_MAP) {
-				nouveauY = HEIGHT_MAP - cam.height;
-			}
-		}
-
-		Vecteur posCamera = new Vecteur(nouveauX, nouveauY);
-		cam.position = posCamera;
-	}
-	
 	
 	public void moveCharacter(ArrayList<String> keysPressed) {
-		if(keysPressed.contains("w")) {
+		Character player1 = characters[0];
+		Character player2 = characters[1];
+		// -------------- CONTROLS PLAYER 1 --------------------
+		if (keysPressed.contains("w")) {
 			keysPressed.remove("w");
 			player1.jump();
-			
+
 		}
-		if(keysPressed.contains("s")) {
-			
+		if (keysPressed.contains("s")) {
+
 		}
-		if(keysPressed.contains("a") &&keysPressed.contains("d")) {
-			if(keysPressed.indexOf("a") < keysPressed.indexOf("d")) {
+		if (keysPressed.contains("a") && keysPressed.contains("d")) {
+			if (keysPressed.indexOf("a") < keysPressed.indexOf("d")) {
 				player1.moveX(false);
-			} else{
+			} else {
 				player1.moveX(true);
 			}
 		} else {
-			if(keysPressed.contains("a")) {
+			if (keysPressed.contains("a")) {
 				player1.moveX(true);
-				System.out.println("left");
-			}else if(keysPressed.contains("d")) {
+
+			} else if (keysPressed.contains("d")) {
 				player1.moveX(false);
 			} else {
 				player1.speed.setX(0);
 			}
 		}
-		
-		
-		
+		// ----------------- CONTROLS PLAYER 2 ----------------------
+		if (keysPressed.contains("up_arrow")) {
+			keysPressed.remove("up_arrow");
+			player2.jump();
+
+		}
+		if (keysPressed.contains("down_arrow")) {
+
+		}
+		if (keysPressed.contains("left_arrow") && keysPressed.contains("right_arrow")) {
+			if (keysPressed.indexOf("left_arrow") < keysPressed.indexOf("right_arrow")) {
+				player2.moveX(false);
+			} else {
+				player2.moveX(true);
+			}
+		} else {
+			if (keysPressed.contains("left_arrow")) {
+				player2.moveX(true);
+
+			} else if (keysPressed.contains("right_arrow")) {
+				player2.moveX(false);
+			} else {
+				player2.speed.setX(0);
+			}
+		}
+
 	}
 
 	/**
@@ -199,4 +179,8 @@ public class Map {
 		return cameraRect.intersects(characterRect);
 	}
 
+	public void addPlateforme(double x, double y, double width, double height) {
+		Plateforme newPlateforme = new Plateforme(x, y, width, height);
+		listePlateforme.add(newPlateforme);
+	}
 }

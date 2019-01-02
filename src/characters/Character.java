@@ -12,13 +12,13 @@ import geometrie.Vecteur;
 public class Character {
 	public final static int JUMP_HEIGHT = 50;
 	public final static int MAX_SPEED_DOWN = 10;
-	public final static int SPEED_HORIZON = 3;
-	public final static int JUMPING_POWER = -4;
+	public final static int SPEED_HORIZON = 4;
+	public final static int JUMPING_POWER = -5;
 
-	public final static double GRAV = 0.1;
+	public final static double GRAV = 0.15;
 	public final static int JUMP_SPEED = 30;
-
-	public int damage;
+	
+	public final Color color;
 	public final Vecteur spawnPos;
 	public Vecteur position;
 	public Vecteur centrePos;
@@ -28,12 +28,13 @@ public class Character {
 
 	public int curJumpCount = 0;
 
-	public Character(Vecteur position) {
+	public Character(Vecteur position,Color color) {
 		spawnPos = position;
 		this.position = position;
+		this.color = color;
 		centrePos = new Vecteur(position.getX() + WIDTH / 2, position.getY() + HEIGHT/2);
 		speed = new Vecteur();
-		damage = 0;
+		
 		hitBox = new Ellipse2D.Double(position.getX(), position.getY(), WIDTH, HEIGHT);
 	}
 
@@ -41,7 +42,7 @@ public class Character {
 		double xEcran = position.getX() - camera.position.getX();
 		double yEcran = position.getY() - camera.position.getY();
 		hitBox.setFrame(xEcran, yEcran, WIDTH, HEIGHT);
-		g2d.setColor(new Color(252,187,35));
+		g2d.setColor(color);
 		g2d.fill(hitBox);
 	}
 

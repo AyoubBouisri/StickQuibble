@@ -99,7 +99,7 @@ public class Jeu extends JPanel implements Runnable {
 	public void run() {
 		while (animating) {
 			// move the camera
-			mapTest.moveCamera(keysPressed);
+		
 			mapTest.moveCharacter(keysPressed);
 			mapTest.updateMap();
 			repaint();
@@ -129,18 +129,13 @@ public class Jeu extends JPanel implements Runnable {
 	 */
 	public void creerMapTest() {
 
-		ArrayList<Plateforme> listePlateforme = new ArrayList<Plateforme>();
-		ArrayList<Character> listeCharacters = new ArrayList<Character>();
-		listePlateforme.add(new Plateforme(Map.WIDTH_MAP / 2 - WIDTH_JEU / 2 + 700,
-				Map.HEIGHT_MAP / 2 - HEIGHT_JEU / 2 + 200, 500, 300));
-		listePlateforme.add(new Plateforme(Map.WIDTH_MAP / 2 - WIDTH_JEU / 2 + 200,
-				Map.HEIGHT_MAP / 2 - HEIGHT_JEU / 2 + 200, 400, 200));
-		listePlateforme.add(new Plateforme(Map.WIDTH_MAP / 2 - WIDTH_JEU / 2 + 1300,
-				Map.HEIGHT_MAP / 2 - HEIGHT_JEU / 2 + 200, 500, 300));
-		Character kaya = new Character(
-				new Vecteur(Map.WIDTH_MAP / 2 - WIDTH_JEU / 2 + 700, Map.HEIGHT_MAP / 2 - HEIGHT_JEU / 2));
-		listeCharacters.add(kaya);
-		mapTest = new Map(listePlateforme, listeCharacters, WIDTH_JEU, HEIGHT_JEU);
+		mapTest = new Map( WIDTH_JEU, HEIGHT_JEU);
+		// create a plateform in the middle of the map
+		double widthPlateforme = 1000;
+		double heightPlateforme = widthPlateforme/ 2.5;
+		double xPlateforme = Map.WIDTH_MAP / 2 - widthPlateforme / 2;
+		double yPlateforme = Map.HEIGHT_MAP / 2 - heightPlateforme / 2;
+		mapTest.addPlateforme(xPlateforme, yPlateforme, widthPlateforme, heightPlateforme);
 
 	}
 
@@ -181,17 +176,7 @@ public class Jeu extends JPanel implements Runnable {
 			key = "d";
 			break;	
 		}
-		/*
-		if (keyCode == KeyEvent.VK_UP) {
-			key = "up_arrow";
-		} else if (keyCode == KeyEvent.VK_DOWN) {
-			key = "down_arrow";
-		} else if (keyCode == KeyEvent.VK_LEFT) {
-			key = "left_arrow";
-		} else if (keyCode == KeyEvent.VK_RIGHT) {
-			key = "right_arrow";
-		}
-		*/
+		
 
 		return key;
 	}
