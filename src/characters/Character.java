@@ -24,7 +24,9 @@ public class Character {
 	public Vecteur centrePos;
 	public Vecteur speed;;
 	public Ellipse2D.Double hitBox;
-	public final static int WIDTH = 30, HEIGHT = 50;
+	public final static int WIDTH = 50, HEIGHT = 60;
+	public final int CIRCLE_WIDTH = HEIGHT * 2; // width of the circle when the character is out of the screen
+
 
 	public int curJumpCount = 0;
 
@@ -45,12 +47,53 @@ public class Character {
 		g2d.setColor(color);
 		g2d.fill(hitBox);
 	}
-
+	/**
+	 * Method that draws the character at the side of the screen in a circle if the character is out of the screen.
+	 * @param g2d
+	 * @param camera
+	 */
 	public void dessinerHorsEcran(Graphics2D g2d, Camera camera) {
-
+		double xCircle = 0,yCircle= 0;
+		final double OFF_SET = 10;
+		if(position.getX() < camera.position.getX()) {
+			
+			xCircle = OFF_SET;
+			yCircle = position.getY() - camera.position.getY() + HEIGHT / 2;
+			
+		}else if(position.getX() > camera.position.getX() + camera.width) {
+			xCircle = camera.position.getX() +  camera.width - CIRCLE_WIDTH - camera.position.getX() - OFF_SET;
+			yCircle = position.getY() - camera.position.getY() + HEIGHT / 2;
+		}else if(position.getY() < camera.position.getY()) {
+			xCircle = position.getX() - camera.position.getX() + WIDTH / 2;
+			yCircle = OFF_SET;
+		}else if(position.getY() > camera.position.getY() + camera.height) {
+			
+			xCircle = position.getX() - camera.position.getX() + WIDTH /2;
+			yCircle = camera.position.getY() + camera.height - CIRCLE_WIDTH - camera.position.getY() - OFF_SET;
+		}
+		
+		
+		Ellipse2D.Double circle = new Ellipse2D.Double(xCircle, yCircle, CIRCLE_WIDTH, CIRCLE_WIDTH);
+		g2d.setColor(color.WHITE);
+		g2d.fill(circle);
+		g2d.setColor(color.BLACK);
+		g2d.draw(circle);
+		
+		// draw the character 
+		drawCharacter(g2d,xCircle + CIRCLE_WIDTH/2 - WIDTH/2,yCircle + CIRCLE_WIDTH/2 - HEIGHT/2);
 		
 	}
-
+	/**
+	 * Methode that draws only the character. TO BE COMPLETED WITH ANIMATIONS AND ACTUAL DRAWINGS
+	 * @param g2d
+	 * @param x
+	 * @param y
+	 */
+	public void drawCharacter(Graphics2D g2d,double x,double y) {
+		Ellipse2D.Double c = new Ellipse2D.Double(x, y, WIDTH, HEIGHT);
+		g2d.setColor(color);
+		g2d.fill(c);
+	}
 	public void update() {
 		// update the speed after grav
 		double speedWithGrav = speed.getY() + GRAV;
@@ -61,8 +104,9 @@ public class Character {
 		
 		setPosition(position.additionne(speed));
 		if(isOutOfMap()) {
-			// respawn 
+			
 			respawn();
+			
 		}
 	}
 
@@ -94,7 +138,7 @@ public class Character {
 	}
 
 	public boolean canJump() {
-		return (curJumpCount == 1 || curJumpCount == 0);
+		return (curJumpCount < 2);
 	}
 	
 	public void setPosition(Vecteur newPos) {

@@ -4,7 +4,7 @@ import geometrie.Vecteur;
 import characters.Character;
 
 public class Camera {
-	public final double COEF_MAX = 0.30;
+	public final double COEF_MAX = 0.35;
 	public final double COEF_CTC = 0.1; // Coef of the distance between a character and the camera zone
 	public final double COEF_CAMSPEED = 0.175;
 	public double maxDeltaPosX;
@@ -39,8 +39,6 @@ public class Camera {
 		double xAverage=0,yAverage=0;
 		for(Character c : characters) {
 			Vecteur posTransfo = inZoneMax(c.position);
-			//double posX = c.position.getX();
-			//double posY = c.position.getY();
 			xAverage+= posTransfo.getX();
 			yAverage+= posTransfo.getY();
 			
@@ -59,7 +57,7 @@ public class Camera {
 	 * @return return the new position of the character that is within the zone accepted
 	 */
 	public Vecteur inZoneMax(Vecteur pos) {
-		Vecteur vecTransfo = new Vecteur(pos.getX(),pos.getY());
+		Vecteur vecTransfo = pos.copy();
 		
 		if(pos.getX() > mapWidth - maxDeltaPosX) {
 			vecTransfo.setX(mapWidth - maxDeltaPosX);
