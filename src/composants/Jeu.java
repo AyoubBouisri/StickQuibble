@@ -175,6 +175,9 @@ public class Jeu extends JPanel implements Runnable {
 		case KeyEvent.VK_D :
 			key = "d";
 			break;	
+		case KeyEvent.VK_H :
+			key = "h";
+			break;
 		}
 		
 

@@ -90,6 +90,9 @@ public class Map {
 				if (Collision.inCollisionFloor(c, pl.floor) != null) {
 					c.curJumpCount = 0;
 					c.speed.setY(0);
+					c.isOnGround = true;
+				} else {
+					c.isOnGround = false;
 				}
 			}
 
@@ -126,6 +129,11 @@ public class Map {
 				player1.speed.setX(0);
 			}
 		}
+		if(keysPressed.contains("h")) {
+			player1.beginDodge();
+			
+		}
+		
 		// ----------------- CONTROLS PLAYER 2 ----------------------
 		if (keysPressed.contains("up_arrow")) {
 			keysPressed.remove("up_arrow");
